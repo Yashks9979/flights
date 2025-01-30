@@ -1,10 +1,11 @@
 const CrudRepository=require('./crud-repository');
 
-const {Airplane}=require('../models/airplane');
+const {airplane}=require('../models/airplane');
 
 class AirplaneRepository extends CrudRepository{
     constructor(){
-        super(Airplane);
+        console.log("Airplane Model:", airplane);
+        super(airplane);
     }
 
 }
