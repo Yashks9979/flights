@@ -1,4 +1,4 @@
-const {AirplaneRepository}=require('../repository/index');
+const {AirplaneRepository}=require('../repository');
 
 const airplaneRepository=new AirplaneRepository();
 
@@ -14,5 +14,5 @@ async function createAirplane(data){
 }
 
 module.exports={
-    createAirplane
+    createAirplane,
 }
