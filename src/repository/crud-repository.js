@@ -5,12 +5,11 @@ class CrudRepository{
         this.model=model;
     }
     async create(data){
-        try {
-           // console.log(this.model); ->this coming out to be undefined>>>
+        try{
             const response=await this.model.create(data);
             return response;
-        } catch (error) {
-            Logger.error('something went wrong in the crud repo :create function');
+        }
+        catch(error){
             throw error;
         }
     }
