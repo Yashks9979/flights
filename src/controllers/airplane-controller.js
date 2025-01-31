@@ -42,8 +42,23 @@ async function getAirplane(req,res){
     }
 }
 
+//api  structure DELETE localhost:3000/api/v1/airplanes/:id
+async function destroyAirplane(req,res){
+    try {
+        const airplane=await AirplaneService.destroyAirplane(req.params.id);
+        console.log(airplane);
+        SuccessResponse.data=airplane;
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+    } catch (error) {
+        ErrorResponse.error=error;
+        return res.status(error.StatusCodes || StatusCodes.BAD_REQUEST).json(ErrorResponse);
+    }
+}
+
+
 module.exports={
     createAirplane,
     getAirplanes,
-    getAirplane
+    getAirplane,
+    destroyAirplane
 }
