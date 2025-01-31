@@ -6,6 +6,8 @@ const {AirplaneMiddlewares}=require('../../middlewares');
 
 const router=express.Router();
 
+
+router.patch('/:id',AirplaneController.updateAirplane);
 router.delete('/:id',AirplaneController.destroyAirplane);
 router.get('/:id',AirplaneController.getAirplane);
 router.get('/',AirplaneController.getAirplanes);

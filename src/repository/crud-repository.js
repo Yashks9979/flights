@@ -42,6 +42,9 @@ class CrudRepository{
                     id:id
                 }
             });
+            if(response==0){
+                throw new AppError('airplane to update not found',StatusCodes.NOT_FOUND);
+            }
             return response;
     }
 }
