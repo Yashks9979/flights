@@ -35,7 +35,7 @@ async function createFlight(data){
 
 async function getAllFlights(query){
     let customFilter={};
-    let sortFilter=[];//why we are creating another sortFilter object>>
+    let sortFilter=[];
     const endingTripTime=" 23:59:00"; //but why added this?????
     //trips MUM-DEL
    if(query.trips){
@@ -60,10 +60,11 @@ async function getAllFlights(query){
             [Op.between]:[query.tripDate,query.tripDate+endingTripTime]
         }
      }
-//NOT UNDERSTAND THE SORTING MECHANISM AND ASSOCIATION  IN THIS PROJECT TILL NOW>>>>
+//NOT UNDERSTAND ASSOCIATION  IN THIS PROJECT TILL NOW>>>>
      if(query.sort){
         const params=query.sort.split(',');
         const sortFilters=params.map((param)=>param.split('_'));
+        console.log(sortFilters);
          sortFilter=sortFilters;
      }
       try {
