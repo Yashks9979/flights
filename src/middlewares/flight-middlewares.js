@@ -4,12 +4,21 @@ const {ErrorResponse}=require('../utils/common');
 const AppError = require('../utils/errors/app-error');
 
 function validateCreateRequest(req,res,next){
+    if(req.body.departureAirportId===req.body.arrivalAirportId){
+        ErrorResponse.message='something went wrong while creating Flights';
+        ErrorResponse.error=new AppError(['departure airport and arrival airport cannot be same'],StatusCodes.BAD_REQUEST);
+        return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
+    }
+
+    if(req.body.arrivalTime && req.body.departureTime){
     const isValidTime = validateTime(req.body.arrivalTime, req.body.departureTime);
     if(!isValidTime){
         ErrorResponse.message='something went wrong while creating Flights';
         ErrorResponse.error=new AppError(['departure time is more than arrival time'],StatusCodes.BAD_REQUEST);
         return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
     }
+}
+
     if(!req.body.flightNumber){
         ErrorResponse.message='something went wrong while creating Flights';
         ErrorResponse.error=new AppError(['flightNumber was not found in incoming request'],StatusCodes.BAD_REQUEST);
