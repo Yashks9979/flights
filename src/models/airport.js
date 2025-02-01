@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
         this.belongsTo(models.City,{
           foreignKey:'cityId',
           onDelete:'CASCADE',
-          onUpdate:'CASCADE'
         });
     }
   }
@@ -44,4 +43,4 @@ module.exports = (sequelize, DataTypes) => {
 };
 
 // npx sequelize migration:generate --name update-city-airport-association
-//
+//run above command to perform association>>
