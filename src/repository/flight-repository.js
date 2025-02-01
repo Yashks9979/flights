@@ -1,6 +1,6 @@
 const {Sequelize}=require('sequelize');
 const CrudRepository=require('./crud-repository');
-const {Flight,Airplane,Airport}=require('../models')
+const {Flight,Airplane,Airport,City}=require('../models')
 class FlightRepository extends CrudRepository{
     constructor(){
         super(Flight);
@@ -27,6 +27,10 @@ class FlightRepository extends CrudRepository{
                 on:{
                       //this is use to add join based on custom column>>>
                       col1:Sequelize.where(Sequelize.col("Flight.departureAirportId"),"=",Sequelize.col("departureAirport.code"))
+                },
+                include:{
+                    model:City,
+                    required:true
                 }
             },
             {
@@ -35,6 +39,10 @@ class FlightRepository extends CrudRepository{
                 as:'arrivalAirport',
                 on:{//why Flight not FLights>>>???
                       col1:Sequelize.where(Sequelize.col("Flight.arrivalAirportId"),"=",Sequelize.col("arrivalAirport.code"))
+                },
+                include:{
+                    model:City,
+                    required:true
                 }
             }
         ]

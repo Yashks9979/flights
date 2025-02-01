@@ -9,7 +9,7 @@
        */
       static associate(models) {
         // define association here
-        this.belongsTo(models.Airplane,{
+        this.belongsTo(models.Airplane,{//how to think belongTo and hasMany or hasOne>>>
           foreignKey:'airplaneId',
           as:'airplaneDetails'
         });
