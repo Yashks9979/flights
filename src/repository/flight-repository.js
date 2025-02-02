@@ -1,6 +1,7 @@
 const {Sequelize}=require('sequelize');
 const CrudRepository=require('./crud-repository');
-const {Flight,Airplane,Airport,City}=require('../models')
+const {Flight,Airplane,Airport,City}=require('../models');
+const db=require('../models');
 class FlightRepository extends CrudRepository{
     constructor(){
         super(Flight);
@@ -50,7 +51,8 @@ class FlightRepository extends CrudRepository{
         return response;
     }
 
-    async updatedRemainingSeats(flightId,seats,dec=true){
+    async updatedRemainingSeats(flightId,seats,dec){
+        await db.sequelize.query(`SELECT * FROM flights WHERE flights.id=${flightId} FOR UPDATE;`);
         const flight=await Flight.findByPk(flightId);//first we have to fetch flight object
         if(parseInt(dec)){
             await flight.decrement('totalSeats',{by:seats});//then we will call decrement and increment on that object
