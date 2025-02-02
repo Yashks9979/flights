@@ -49,6 +49,17 @@ class FlightRepository extends CrudRepository{
         });
         return response;
     }
+
+    async updatedRemainingSeats(flightId,seats,dec=true){
+        const flight=await Flight.findByPk(flightId);//first we have to fetch flight object
+        if(parseInt(dec)){
+            await flight.decrement('totalSeats',{by:seats});//then we will call decrement and increment on that object
+        }
+        else{
+           await flight.increment('totalSeats',{by:seats});//it just incrementing why???
+        }
+        return flight;
+    }
 }
 
 module.exports=FlightRepository;
