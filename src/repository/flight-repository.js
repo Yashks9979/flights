@@ -1,6 +1,7 @@
 const {Sequelize}=require('sequelize');
 const CrudRepository=require('./crud-repository');
 const {Flight,Airplane,Airport,City}=require('../models');
+const {addRowLockOnFlight}=require('../repository/queries');
 const db=require('../models');
 class FlightRepository extends CrudRepository{
     constructor(){
@@ -51,14 +52,14 @@ class FlightRepository extends CrudRepository{
         return response;
     }
 
-    async updatedRemainingSeats(flightId,seats,dec){
-        await db.sequelize.query(`SELECT * FROM flights WHERE flights.id=${flightId} FOR UPDATE;`);
+    async updatedRemainingSeats(flightId,seats,dec=true){
+        await db.sequelize.query(addRowLockOnFlight(flightId));
         const flight=await Flight.findByPk(flightId);//first we have to fetch flight object
-        if(parseInt(dec)){
+        if(+dec){
             await flight.decrement('totalSeats',{by:seats});//then we will call decrement and increment on that object
         }
         else{
-           await flight.increment('totalSeats',{by:seats});//it just incrementing why???
+           await flight.increment('totalSeats',{by:seats});//why it is exceeding more than capacity of airplane???
         }
         return flight;
     }
