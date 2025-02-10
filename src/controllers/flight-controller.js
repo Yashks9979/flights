@@ -26,7 +26,7 @@ async function createFlight(req,res){
 }
 async function getAllFlights(req,res){
     try {
-         const flights=await FlightService.getAllFlights(req.query);
+         const flights=await FlightService.getAllFlights(req.query);//since all data is coming in query params
         SuccessResponse.data=flights;
         return res.status(StatusCodes.OK).json(SuccessResponse);
     } catch (error) {

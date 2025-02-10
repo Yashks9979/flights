@@ -56,13 +56,14 @@ class FlightRepository extends CrudRepository{
         //always try to manage transaction manually>>>
         const transaction=await db.sequelize.transaction();
         try {
-            await db.sequelize.query(addRowLockOnFlight(flightId));
+            await db.sequelize.query(addRowLockOnFlight(flightId));//doubt--why after binding in transaction request is stalling>>
             const flight=await Flight.findByPk(flightId);//first we have to fetch flight object
+         //doubt--   //if above two lines are not part of transaction then why they are executing after --START TRANSACTION>>
             if(+dec){
                 await flight.decrement('totalSeats',{by:seats},{transaction:transaction});//then we will call decrement and increment on that object
             }
             else{
-               await flight.increment('totalSeats',{by:seats},{transaction:transaction});//why it is exceeding more than capacity of airplane???
+               await flight.increment('totalSeats',{by:seats},{transaction:transaction});//doubt--why it is exceeding more than capacity of airplane???
             }
             await transaction.commit();
             return flight;

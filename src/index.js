@@ -11,10 +11,12 @@ app.use(express.text());
 
 
 app.use('/api',apiRoutes);
-
+app.use('/flightsService/api',apiRoutes);
 
 app.listen(ServerConfig.PORT,()=>{
     console.log(`successfully started the server on port:${ServerConfig.PORT}`);
     Logger.info("successfully started server",{});
+
+     
 
 })
